@@ -1,0 +1,31 @@
+/* Fuente global y optimizaciones táctiles para móviles y tabletas */
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tipografía decorativa para títulos */
+h1, h2, h3, .font-heading {
+  font-family: 'Fredoka', cursive;
+}
+
+/* Animación táctil al presionar botones */
+.btn-press {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn-press:active {
+  transform: scale(0.96);
+}
+
+/* Personalización de la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}

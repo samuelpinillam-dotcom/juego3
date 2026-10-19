@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Aventura Matemática - Juego Educativo</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos Personalizados -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+  <!-- BARRA SUPERIOR / HEADER -->
+  <header class="w-full bg-slate-800/80 backdrop-blur border-b border-slate-700/60 sticky top-0 z-50 px-3 py-2 sm:px-6 sm:py-3">
+    <div class="max-w-4xl mx-auto flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="goToMenu()">
+        <div class="bg-indigo-600 text-white p-1.5 sm:p-2 rounded-xl shadow-lg shadow-indigo-600/30">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <span class="font-heading text-lg sm:text-2xl font-bold tracking-wide bg-gradient-to-r from-indigo-300 via-sky-300 to-emerald-300 bg-clip-text text-transparent">
+          Aventura Matemática
+        </span>
+      </div>
+
+      <!-- PANEL DE VIDAS Y PROGRESO -->
+      <div id="gameHUD" class="hidden flex items-center gap-2 sm:gap-6 bg-slate-900/80 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full border border-slate-700/80">
+        <div class="flex items-center gap-1" id="heartsContainer">
+          <span class="text-rose-500 text-base sm:text-xl">❤️</span>
+          <span class="text-rose-500 text-base sm:text-xl">❤️</span>
+          <span class="text-rose-500 text-base sm:text-xl">❤️</span>
+        </div>
+        <div class="h-4 w-px bg-slate-700"></div>
+        <div class="text-xs sm:text-sm font-bold text-slate-300">
+          <span id="currentQuestionNum" class="text-indigo-400">1</span>/10
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="w-full max-w-4xl mx-auto p-3 sm:p-6 flex-grow flex flex-col justify-center items-center">
+
+    <!-- MENÚ PRINCIPAL -->
+    <section id="menuScreen" class="w-full flex flex-col items-center text-center py-4 sm:py-8 space-y-6 sm:space-y-8">
+      <div class="space-y-2 max-w-xl">
+        <span class="px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider">
+          Aprende Jugando
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+          Elige tu Desafío
+        </h1>
+        <p class="text-slate-400 text-xs sm:text-base">
+          Responde 10 preguntas por nivel. ¡Tienes 3 vidas en cada intento!
+        </p>
+      </div>
+
+      <!-- TARJETAS DE NIVELES -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 w-full">
+
+        <!-- Nivel 1 -->
+        <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700 flex flex-col justify-between space-y-4 hover:border-emerald-500/50 transition duration-200 group shadow-lg">
+          <div class="space-y-3">
+            <div class="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center justify-center text-emerald-400 font-bold text-xl group-hover:scale-110 transition duration-200">
+              1
+            </div>
+            <div class="text-left">
+              <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition">Fracciones</h3>
+              <p class="text-slate-400 text-xs sm:text-sm mt-1">Identificación de gráficos de fracciones y partes pintadas.</p>
+            </div>
+          </div>
+          <button onclick="startLevel(1)" class="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 btn-press text-sm sm:text-base">
+            Jugar Nivel 1
+          </button>
+        </div>
+
+        <!-- Nivel 2 -->
+        <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700 flex flex-col justify-between space-y-4 hover:border-sky-500/50 transition duration-200 group shadow-lg">
+          <div class="space-y-3">
+            <div class="w-12 h-12 bg-sky-500/10 border border-sky-500/20 rounded-xl flex items-center justify-center text-sky-400 font-bold text-xl group-hover:scale-110 transition duration-200">
+              2
+            </div>
+            <div class="text-left">
+              <h3 class="text-xl font-bold text-white group-hover:text-sky-400 transition">Ángulos y Triángulos</h3>
+              <p class="text-slate-400 text-xs sm:text-sm mt-1">Lados, ángulos de triángulos (180°) y tipos de figuras.</p>
+            </div>
+          </div>
+          <button onclick="startLevel(2)" class="w-full py-3 px-4 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl shadow-lg shadow-sky-600/20 btn-press text-sm sm:text-base">
+            Jugar Nivel 2
+          </button>
+        </div>
+
+        <!-- Nivel 3 -->
+        <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700 flex flex-col justify-between space-y-4 hover:border-purple-500/50 transition duration-200 group shadow-lg">
+          <div class="space-y-3">
+            <div class="w-12 h-12 bg-purple-500/10 border border-purple-500/20 rounded-xl flex items-center justify-center text-purple-400 font-bold text-xl group-hover:scale-110 transition duration-200">
+              3
+            </div>
+            <div class="text-left">
+              <h3 class="text-xl font-bold text-white group-hover:text-purple-400 transition">Divisiones y Potencias</h3>
+              <p class="text-slate-400 text-xs sm:text-sm mt-1">Divisiones con cantidades grandes, potencias y raíces simples.</p>
+            </div>
+          </div>
+          <button onclick="startLevel(3)" class="w-full py-3 px-4 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl shadow-lg shadow-purple-600/20 btn-press text-sm sm:text-base">
+            Jugar Nivel 3
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PANTALLA DE JUEGO -->
+    <section id="gameplayScreen" class="w-full hidden flex-col space-y-4 sm:space-y-6">
+      
+      <div class="bg-slate-800 border border-slate-700/80 rounded-2xl p-4 sm:p-6 shadow-xl space-y-4">
+        <div class="flex items-center justify-between">
+          <span id="levelBadge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-700 text-slate-300">
+            Categoría
+          </span>
+          <button onclick="goToMenu()" class="text-slate-400 hover:text-slate-200 text-xs font-semibold underline">
+            Salir al menú
+          </button>
+        </div>
+
+        <h2 id="questionText" class="text-lg sm:text-2xl font-bold text-white leading-relaxed">
+          Cargando pregunta...
+        </h2>
+
+        <div id="questionGraphicContainer" class="hidden justify-center items-center py-2 bg-slate-900/50 rounded-xl border border-slate-700/50">
+          <div id="questionGraphic" class="w-full max-w-xs flex justify-center"></div>
+        </div>
+      </div>
+
+      <!-- PARRILLA DE OPCIONES -->
+      <div id="optionsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full"></div>
+
+      <!-- RETROALIMENTACIÓN -->
+      <div id="feedbackContainer" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-4 sm:p-5 shadow-xl flex-col space-y-3">
+        <div id="feedbackHeader" class="flex items-center gap-2 font-bold text-base sm:text-lg"></div>
+        <p id="feedbackExplanation" class="text-xs sm:text-sm text-slate-300 leading-relaxed"></p>
+        <button id="nextBtn" onclick="nextQuestion()" class="self-end py-2.5 px-6 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 btn-press text-sm sm:text-base">
+          Siguiente Pregunta ➔
+        </button>
+      </div>
+
+    </section>
+
+    <!-- PANTALLA DE RESULTADOS -->
+    <section id="resultScreen" class="w-full max-w-md hidden flex-col items-center text-center p-6 sm:p-8 bg-slate-800 border border-slate-700 rounded-3xl shadow-2xl space-y-6">
+      <div id="resultIcon" class="text-6xl sm:text-7xl">🎉</div>
+      
+      <div class="space-y-2">
+        <h2 id="resultTitle" class="text-2xl sm:text-4xl font-extrabold text-white">¡Nivel Completado!</h2>
+        <p id="resultSubtitle" class="text-slate-300 text-sm sm:text-base">Demostraste un gran dominio del tema.</p>
+      </div>
+
+      <div class="bg-slate-900/70 w-full p-4 rounded-2xl border border-slate-700/60 space-y-2">
+        <div class="flex justify-between text-sm sm:text-base text-slate-400">
+          <span>Preguntas respondidas:</span>
+          <span id="finalScore" class="font-bold text-indigo-400">10 / 10</span>
+        </div>
+        <div class="flex justify-between text-sm sm:text-base text-slate-400">
+          <span>Vidas restantes:</span>
+          <span id="finalLives" class="font-bold text-rose-400">3 ❤️</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col w-full gap-3">
+        <button id="retryLevelBtn" onclick="restartCurrentLevel()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 btn-press text-sm sm:text-base">
+          Volver a Intentar
+        </button>
+        <button onclick="goToMenu()" class="w-full py-3 bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold rounded-xl btn-press text-sm sm:text-base">
+          Volver al Menú Principal
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="w-full py-3 text-center text-xs text-slate-500 border-t border-slate-800">
+    Aventura Matemática &copy; Juego Educativo
+  </footer>
+
+  <!-- Lógica de JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
